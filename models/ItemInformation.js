@@ -4,7 +4,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class ItemInformation extends Model {
     static associate(models) {
-      // this.hasOne(models.Item, { foreignKey: 'itemId' });
+      this.hasOne(models.Item, { foreignKey: 'itemId' });
     }
   }
 
@@ -16,15 +16,15 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
       },
-      // itemId: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      //   references: {
-      //     model: 'Item',
-      //     key: 'itemId',
-      //   },
-      //   onDelete: 'CASCADE',
-      // },
+      itemId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Item',
+          key: 'itemId',
+        },
+        onDelete: 'CASCADE',
+      },
       content: {
         type: DataTypes.STRING,
         allowNull: false,
