@@ -22,7 +22,8 @@ class ItemService {
     if (!image){
       throw Error('이미지가 추가되지 않았습니다.')
     }
-    await this.itemRepository.createItem(title, price, color, size, content, material, gender, thema, category)
+    const item = await this.itemRepository.createItem(title, price, color, size, content, material, gender, thema, category)
+    console.log("service item: ", item)
     return item;
   }
 }
