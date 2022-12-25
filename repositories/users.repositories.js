@@ -7,6 +7,13 @@ class UsersRepositorys {
         await User.creat({email, password, firstName, lastName, country})
     }
 
+    userLogin = async ({}) => {}
+    userLogout = async ({}) => {}
+    userGetInfo = async ({}) => {}
+    userModify = async ({}) => {}
+
+ 
+
 
 }
 

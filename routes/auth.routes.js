@@ -4,9 +4,9 @@ const usercontroller = new UsersController();
 const router = Router();
 
 router.post('/signup', usercontroller.userSignupController);
-router.post;
-router.post;
-router.get;
-router.patch;
+router.post('/login', usercontroller.userLoginController)
+router.post('/logout', usercontroller.userLogoutController)
+router.get('/', usercontroller.userGetInfoController)
+router.patch('/', usercontroller.userModifyController)
 
 module.exports = router;

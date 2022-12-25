@@ -69,6 +69,24 @@ class UsersService {
     res.status(200).json({Messge: "회원가입 성공", result:true})
 
   };
+
+
+  userLoginService = async (req, res) =>{
+
+  }
+
+  userLogoutService = async (req, res) =>{
+    
+  }
+
+  userGetInfoService = async (req, res) =>{
+    
+  }
+
+  userModifyService = async (req, res) =>{
+    
+  }
+
 }
 
 module.exports = UsersService;
