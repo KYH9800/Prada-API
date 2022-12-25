@@ -36,33 +36,33 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
       },
-      // orderListId: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      //   references: {
-      //     model: 'OrderList',
-      //     key: 'orderListId',
-      //   },
-      //   onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
-      // },
-      // bucketId: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      //   references: {
-      //     model: 'Bucket',
-      //     key: 'bucketId',
-      //   },
-      //   onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
-      // },
-      // wishListId: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      //   references: {
-      //     model: 'WishList',
-      //     key: 'wishListId',
-      //   },
-      //   onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
-      // },
+      orderListId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'OrderList',
+          key: 'orderListId',
+        },
+        onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
+      },
+      bucketId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Bucket',
+          key: 'bucketId',
+        },
+        onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
+      },
+      wishListId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'WishList',
+          key: 'wishListId',
+        },
+        onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
+      },
       email: {
         type: DataTypes.STRING(30), // 조건: 이메일 글자 수 30글자 이내
         allowNull: false, // 필수
