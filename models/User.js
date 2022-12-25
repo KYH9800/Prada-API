@@ -13,11 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       // 모델 간의 관계를 설정하는 associate()라는 정적 메소드를 만들었습니다.
       // 그리고 외부에서 호출한 1:1, 1:N, N;N (oneToMany, belongsTo 등등..) 메소드를 이 안으로 옮겨 클래스 안으로 관련된 코드를 모았습니다.
       // 관계 설정은 여기에서 합니다.
-      this.hasMany(models.Bucket, { foreignKey: 'userId' }); // 한명의 User는 많은 Bucket을 가질 수 있다.
+      this.hasMany(models.Cart, { foreignKey: 'userId' }); // 한명의 User는 많은 Cart을 가질 수 있다.
       this.hasMany(models.WishList, { foreignKey: 'userId' });
       this.hasMany(models.OrderList, { foreignKey: 'userId' });
-      this.hasMany(models.WishList, { foreignKey: 'wishListId' });
-      this.hasMany(models.Bucket, { foreignKey: 'bucketId' });
     }
   }
 
@@ -44,12 +42,12 @@ module.exports = (sequelize, DataTypes) => {
         },
         onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
       },
-      bucketId: {
+      cartId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'Bucket',
-          key: 'bucketId',
+          model: 'Cart',
+          key: 'cartId',
         },
         onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
       },

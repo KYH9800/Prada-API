@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasOne(models.ItemOption, { foreignKey: 'itemOptionId' });
       this.hasOne(models.ItemInformation, { foreignKey: 'itemInformationId' });
       this.belongsTo(models.WishList, { foreignKey: 'wishListId' });
-      this.belongsTo(models.Bucket, { foreignKey: 'bucketId' });
+      this.belongsTo(models.Cart, { foreignKey: 'carttId' });
       this.belongsTo(models.OrderList, { foreignKey: 'orderListId' });
     }
   }

@@ -2,16 +2,16 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Bucket extends Model {
+  class Cart extends Model {
     static associate(models) {
       this.hasMany(models.Item, { foreignKey: 'itemId' });
       this.belongsTo(models.User, { foreignKey: 'userId' });
     }
   }
 
-  Bucket.init(
+  Cart.init(
     {
-      bucketId: {
+      cartId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
@@ -42,9 +42,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Bucket',
+      modelName: 'Cart',
     }
   );
 
-  return Bucket;
+  return Cart;
 };
