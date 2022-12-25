@@ -24,15 +24,15 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
-        // references: {
-        //   model: 'ItemOption', // ItemOption 테이블에
-        //   key: 'itemId', // itemId colum괴 관계를 맺음
-        // },
-        // //* 이거 2개 쓰는거 가능한가?, references는 정확이 어떤 역할을 하는가? (sequelize model references)
-        // references: {
-        //   model: 'ItemInformation',
-        //   key: 'itemId',
-        // },
+        references: {
+          model: 'ItemOption', // ItemOption 테이블에
+          key: 'itemId', // itemId colum괴 관계를 맺음
+        },
+        //* 이거 2개 쓰는거 가능한가?, references는 정확이 어떤 역할을 하는가? (sequelize model references)
+        references: {
+          model: 'ItemInformation',
+          key: 'itemId',
+        },
         //! 1:1 관계에서 사용하는 것은 아닌것 같음
         // CASCADE: 1:N 관계의 테이블에서 1의 데이터를 지우면 관련된 N을 지우게 된다.
         // onDelete: 'CASCADE', // 관련된 데이터를 삭제하는데 용이하다.
