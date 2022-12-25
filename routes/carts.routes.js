@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const BucketController = require('../controllers/buckets.controller');
+const BucketController = require('../controllers/carts.controller');
 const bucketController = new BucketController();
 
 // router.get('/user/bucket', bucketController);
