@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100), // password는 암호화를 하기 떄문에 문자열이 길어진다
         allowNull: false, // "이건 필수다"라는 뜻, 값을 비워도 괜찮겠니? 이런 소리 [필수여부: false-필수, true-필수 X]
       },
+      nickname: {
+        type: DataTypes.STRING(100), // password는 암호화를 하기 떄문에 문자열이 길어진다
+        allowNull: false, // "이건 필수다"라는 뜻, 값을 비워도 괜찮겠니? 이런 소리 [필수여부: false-필수, true-필수 X]
+      },
     },
     {
       // 다른 모델 옵션은 여기에 있습니다. 예시: charset(문자 인코딩 방식 설정), collate: 'utf8_general_ci'(한글 저장)
