@@ -4,7 +4,7 @@ const { Model } = require('sequelize');
 // 이 코드를 이해하기 위한 참고 사이트(클래스): https://ko.javascript.info/class-inheritance
 module.exports = (sequelize, DataTypes) => {
   // User라는 클래스를 정의하고 sequelize 에서 Model 부모 클래스를 상속 받아옴
-  class User extends Model {
+  class User2 extends Model {
     // "prototype"이 아닌 클래스 함수 자체에 메서드를 설정할 수도 있습니다. 이런 메서드를 정적(static) 메서드라고 부릅니다.
     // (참고: 정적 메서드와 정적 프로퍼티: https://ko.javascript.info/static-properties-methods)
     // (아래) 모델간의 관계를 정의하는 메소드
@@ -16,9 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       // 모델 간의 관계를 설정하는 associate()라는 정적 메소드를 만들었습니다.
       // 그리고 외부에서 호출한 1:1, 1:N, N;N (oneToMany, belongsTo 등등..) 메소드를 이 안으로 옮겨 클래스 안으로 관련된 코드를 모았습니다.
       // 관계 설정은 여기에서 합니다.
-      this.hasMany(models.Cart, { foreignKey: 'userId' }); // 한명의 User는 많은 Bucket을 가질 수 있다.
-      this.hasMany(models.WishList, { foreignKey: 'userId' });
-      this.hasMany(models.OrderList, { foreignKey: 'userId' });
+      this.hasOne(models.Cart, { foreignKey: 'userId' }); // 한명의 User는 많은 Bucket을 가질 수 있다.
+      this.hasOne(models.WishList, { foreignKey: 'userId' });
+      this.hasOne(models.OrderList, { foreignKey: 'userId' });
     }
   }
 
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
   // init({1}, {2})
   // {1}: 테이블의 컬럼 이름과 속성 값을 전달
   // {2}: 테이블 생성에 필요한 기타 값을 전달
-  User.init(
+  User2.init(
     {
       // 모델 속성은 여기서 정의됩니다. row(행, 가로) 부분임
       userId: {
@@ -35,33 +35,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
-      },
-      orderListId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'OrderList',
-          key: 'orderListId',
-        },
-        onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
-      },
-      bucketId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Bucket',
-          key: 'bucketId',
-        },
-        onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
-      },
-      wishListId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'WishList',
-          key: 'wishListId',
-        },
-        onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
       },
       email: {
         type: DataTypes.STRING(30), // 조건: 이메일 글자 수 30글자 이내
@@ -88,11 +61,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       // 다른 모델 옵션은 여기에 있습니다. 예시: charset(문자 인코딩 방식 설정), collate: 'utf8_general_ci'(한글 저장)
       sequelize, // 연결 인스턴스를 통과해야 합니다.
-      modelName: 'User', // 모델명을 선택해야 합니다.
+      modelName: 'User2', // 모델명을 선택해야 합니다.
     }
   );
 
-  return User;
+  return User2;
 };
 
 /* 

@@ -4,11 +4,16 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Item extends Model {
     static associate(models) {
-      this.hasOne(models.ItemOption, { foreignKey: 'itemOptionId' });
-      this.hasOne(models.ItemInformation, { foreignKey: 'itemInformationId' });
-      this.belongsTo(models.WishList, { foreignKey: 'wishListId' });
-      this.belongsTo(models.Cart, { foreignKey: 'cartId' });
-      this.belongsTo(models.OrderList, { foreignKey: 'orderListId' });
+      this.hasOne(models.ItemInformation, { foreignKey: 'itemId' });
+
+      this.hasMany(models.ItemOption, { foreignKey: 'itemId' });
+      this.hasMany(models.ItemInventory, { foreignKey: 'itemId' });
+
+      this.belongsTo(models.AdminUser, { foreignKey: 'adminUserId' });
+
+      // this.belongsToMany(models.WishList, { foreignKey: 'wishListId' });
+      // this.belongsTo(models.Cart, { foreignKey: 'cartId' });
+      // this.belongsTo(models.OrderList, { foreignKey: 'orderListId' });
     }
   }
 

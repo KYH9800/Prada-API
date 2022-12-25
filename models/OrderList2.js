@@ -2,14 +2,18 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class OrderList extends Model {
+  class OrderList2 extends Model {
     static associate(models) {
-      this.belongsTo(models.User, { foreignKey: 'userId' });
-      // this.belongsToMany(models.Item, { foreignKey: 'itemId' });
+      this.hasOne(models.User, { foreignKey: 'userId' });
+
+      this.belongsToMany(models.Item2, {
+        foreignKey: 'orderListId',
+        through: 'OrderListItem',
+      });
     }
   }
 
-  OrderList.init(
+  OrderList2.init(
     {
       // 모델 속성은 여기서 정의됩니다. row(행, 가로) 부분임
       orderListId: {
@@ -33,9 +37,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'OrderList',
+      modelName: 'OrderList2',
     }
   );
 
-  return OrderList;
+  return OrderList2;
 };

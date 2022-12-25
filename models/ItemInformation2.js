@@ -2,34 +2,34 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class ItemInventory extends Model {
+  class ItemInformation2 extends Model {
     static associate(models) {
-      this.hasOne(models.ItemOption, { foreignKey: 'itemOptionId' });
+      this.belongsTo(models.Item2, { foreignKey: 'itemId' });
     }
   }
 
-  ItemInventory.init(
+  ItemInformation2.init(
     {
-      itemInventoryId: {
+      itemInformationId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
-      count: {
+      content: {
         type: DataTypes.STRING,
-        // allowNull: false, // 필수
+        allowNull: false,
       },
-      image: {
+      material: {
         type: DataTypes.STRING,
         allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: 'ItemInventory',
+      modelName: 'ItemInformation2',
     }
   );
 
-  return ItemInventory;
+  return ItemInformation2;
 };

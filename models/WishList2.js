@@ -2,14 +2,18 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class WishList extends Model {
+  class WishList2 extends Model {
     static associate(models) {
-      this.hasMany(models.Item, { foreignKey: 'itemId' });
-      this.belongsTo(models.User, { foreignKey: 'userId' });
+      this.hasOne(models.User, { foreignKey: 'userId' });
+      // this.hasMany(models.Item, { foreignKey: 'itemId' });
+      this.belongsToMany(models.Item2, {
+        foreignKey: 'wishListId',
+        through: 'WishListItem',
+      });
     }
   }
 
-  WishList.init(
+  WishList2.init(
     {
       // 모델 속성은 여기서 정의됩니다. row(행, 가로) 부분임
       wishListId: {
@@ -21,9 +25,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'WishList',
+      modelName: 'WishList2',
     }
   );
 
-  return WishList;
+  return WishList2;
 };

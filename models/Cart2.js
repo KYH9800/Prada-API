@@ -2,15 +2,20 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class ItemInventory extends Model {
+  class Cart2 extends Model {
     static associate(models) {
-      this.hasOne(models.ItemOption, { foreignKey: 'itemOptionId' });
+      this.hasOne(models.User, { foreignKey: 'userId' });
+      // this.hasMany(models.Item, { foreignKey: 'itemId' });
+      this.belongsToMany(models.Item2, {
+        foreignKey: 'cartId',
+        through: 'CartItemList',
+      });
     }
   }
 
-  ItemInventory.init(
+  Cart2.init(
     {
-      itemInventoryId: {
+      cartId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
@@ -18,18 +23,14 @@ module.exports = (sequelize, DataTypes) => {
       },
       count: {
         type: DataTypes.STRING,
-        // allowNull: false, // 필수
-      },
-      image: {
-        type: DataTypes.STRING,
         allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: 'ItemInventory',
+      modelName: 'Cart2',
     }
   );
 
-  return ItemInventory;
+  return Cart2;
 };
