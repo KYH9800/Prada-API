@@ -4,8 +4,8 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class OrderList extends Model {
     static associate(models) {
-      this.hasMany(models.Item, { foreignKey: 'itemId' });
       this.belongsTo(models.User, { foreignKey: 'userId' });
+      // this.belongsToMany(models.Item, { foreignKey: 'itemId' });
     }
   }
 
@@ -17,24 +17,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
-      },
-      itemId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Item',
-          key: 'itemId',
-        },
-        onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
-      },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'User',
-          key: 'userId',
-        },
-        onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
       },
       orderNum: {
         type: DataTypes.STRING,

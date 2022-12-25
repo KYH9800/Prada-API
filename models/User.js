@@ -9,11 +9,14 @@ module.exports = (sequelize, DataTypes) => {
     // (참고: 정적 메서드와 정적 프로퍼티: https://ko.javascript.info/static-properties-methods)
     // (아래) 모델간의 관계를 정의하는 메소드
 
+    // 비슷한 성질을 가진 여러개의 객체를 만들기 위해, 일종의 설계도라고 할 수 있는 생성자 함수(Constructor)를
+    // 만들어 찍어내듯 사용하는데 이렇게 생성된 객체를 인스턴스라 부를 수 있다.
+    // https://seo-tory.tistory.com/47
     static associate(models) {
       // 모델 간의 관계를 설정하는 associate()라는 정적 메소드를 만들었습니다.
       // 그리고 외부에서 호출한 1:1, 1:N, N;N (oneToMany, belongsTo 등등..) 메소드를 이 안으로 옮겨 클래스 안으로 관련된 코드를 모았습니다.
       // 관계 설정은 여기에서 합니다.
-      this.hasMany(models.Cart, { foreignKey: 'userId' }); // 한명의 User는 많은 Cart을 가질 수 있다.
+      this.hasMany(models.Cart, { foreignKey: 'userId' }); // 한명의 User는 많은 Bucket을 가질 수 있다.
       this.hasMany(models.WishList, { foreignKey: 'userId' });
       this.hasMany(models.OrderList, { foreignKey: 'userId' });
     }
@@ -33,33 +36,33 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
       },
-      orderListId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'OrderList',
-          key: 'orderListId',
-        },
-        onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
-      },
-      cartId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Cart',
-          key: 'cartId',
-        },
-        onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
-      },
-      wishListId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'WishList',
-          key: 'wishListId',
-        },
-        onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
-      },
+      // orderListId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      //   references: {
+      //     model: 'OrderList',
+      //     key: 'orderListId',
+      //   },
+      //   onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
+      // },
+      // bucketId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      //   references: {
+      //     model: 'Bucket',
+      //     key: 'bucketId',
+      //   },
+      //   onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
+      // },
+      // wishListId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      //   references: {
+      //     model: 'WishList',
+      //     key: 'wishListId',
+      //   },
+      //   onDelete: 'CASCADE', //! 이거 확인하기: 따라서 삭제가 되는지
+      // },
       email: {
         type: DataTypes.STRING(30), // 조건: 이메일 글자 수 30글자 이내
         allowNull: false, // 필수
