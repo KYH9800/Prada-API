@@ -4,7 +4,7 @@ class ItemController {
   itemService = new ItemService();
   createItem = async (req, res) => {
     try{
-      // const { userId } = res.locals.user;
+      const { userId } = res.locals.user;
       const { title, price, color, size, content, material, gender, thema, category } = req.body;
       const image = req.file.location;
       console.log(req.file);
