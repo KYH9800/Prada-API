@@ -2,34 +2,32 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Cart extends Model {
+  class ItemColor extends Model {
     static associate(models) {
-      this.belongsTo(models.User, { foreignKey: 'userId' });
-      this.belongsToMany(models.Item, {
-        foreignKey: 'cartId',
-        through: 'CartItemList',
-      });
+      this.hasMany(models.OptionImage, { foreignKey: 'itemColorId' });
+      this.hasMany(models.OptionSize, { foreignKey: 'itemColorId' });
+      this.belongsTo(models.Item, { foreignKey: 'itemId' });
     }
   }
 
-  Cart.init(
+  ItemColor.init(
     {
-      cartId: {
+      itemColorId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
-      count: {
+      color: {
         type: DataTypes.STRING,
         allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: 'Cart',
+      modelName: 'ItemColor',
     }
   );
 
-  return Cart;
+  return ItemColor;
 };

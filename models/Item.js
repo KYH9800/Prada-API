@@ -5,11 +5,9 @@ module.exports = (sequelize, DataTypes) => {
   class Item extends Model {
     static associate(models) {
       this.hasOne(models.ItemInformation, { foreignKey: 'itemId' });
-      this.hasMany(models.ItemOption, { foreignKey: 'itemId' });
-
-      this.belongsTo(models.AdminUser, { foreignKey: 'adminUserId2' });
-      this.belongsTo(models.Category, { foreignKey: 'themeId' });
-
+      this.hasMany(models.ItemColor, { foreignKey: 'itemId' });
+      this.belongsTo(models.AdminUser, { foreignKey: 'adminUserId' });
+      this.belongsTo(models.Category, { foreignKey: 'categoryId' });
       this.belongsToMany(models.WishList, {
         foreignKey: 'itemId',
         through: 'WishListItem',

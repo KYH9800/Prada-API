@@ -2,23 +2,23 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Cart extends Model {
+  class OptionSize extends Model {
     static associate(models) {
-      this.belongsTo(models.User, { foreignKey: 'userId' });
-      this.belongsToMany(models.Item, {
-        foreignKey: 'cartId',
-        through: 'CartItemList',
-      });
+      this.belongsTo(models.ItemColor, { foreignKey: 'itemColorId' });
     }
   }
 
-  Cart.init(
+  OptionSize.init(
     {
-      cartId: {
+      optionSizeId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
+      },
+      size: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       count: {
         type: DataTypes.STRING,
@@ -27,9 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Cart',
+      modelName: 'OptionSize',
     }
   );
 
-  return Cart;
+  return OptionSize;
 };
