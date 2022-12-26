@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.ItemOption, { foreignKey: 'itemId' });
 
       this.belongsTo(models.AdminUser, { foreignKey: 'adminUserId2' });
-      this.belongsTo(models.Category, { foreignKey: 'themeId' });
+      this.belongsTo(models.Category, { foreignKey: 'categoryId' });
 
       this.belongsToMany(models.WishList, {
         foreignKey: 'itemId',

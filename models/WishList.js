@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
   class WishList extends Model {
     static associate(models) {
       this.hasOne(models.User, { foreignKey: 'userId' });
-      // this.hasMany(models.Item, { foreignKey: 'itemId' });
       this.belongsToMany(models.Item, {
         foreignKey: 'wishListId',
         through: 'WishListItem',
