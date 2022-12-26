@@ -18,7 +18,7 @@ module.exports = multer({
       // original 폴더 안에 업로드한 파일을 넣을 것이다.
       // 이름이 겹치지 않게 파일 이름에 타임스템프를 더해준다.
       // 이렇게 s3 버켓에 저장한다.
-      console.log(file);
+      // console.log(file);
 
       cb(null, `original/${Date.now()}.png`);
     },

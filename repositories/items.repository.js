@@ -1,47 +1,26 @@
-const {
-  Gender, 
-  Theme, 
-  Category, 
-  Item, 
-  ItemColor, 
-  ItemInformation, 
-  OptionImage, 
-  OptionSize
-} = require('../models');
+const { Item, ItemColor, ItemDetail, ItemInformation, OptionImage } = require('../models');
 
 class ItemRepository {
 
-  createGender = async ({gender}) => {
-    return await Gender.create({gender})
-  }
-
-  createThema = async ({gender, thema}) => {
-    return await Theme.create({gender, thema})
-  }
-
-  createCategory = async ({thema, category}) => {
-    return await Category.create({thema,category})
-  }
-
-  createItem = async (title, price) => {
-    return await Item.create({title, price});
-  };
-
-  createItemColors = async (color) => {
-    return await ItemColor.create({color});
+  createContent = async (title, price) => {
+   return await Item.create({title, price});
   };
   
-  createItemInformation = async (content, material) => {
-    return await ItemInformation.create({content, material});
-  };
+  createColor = async (color, itemId) => {
+    return await ItemColor.create({color, itemId});
+  }
+  
+  createItemDetail = async (gender, theme, category, itemId) => {
+    return await ItemDetail.create({gender, theme, category, itemId});    
+  }
+  
+  createItemInfo = async (content, src, material, itemId) => {
+    return await ItemInformation.create({content, src, material, itemId});    
+  }
 
-  createOptionImage = async (src) => {
-    return await OptionImage.create({src});
-  };
-
-  createOptionSize = async (size, count) => {
-    return await OptionSize.create({size, count});
-  };
+  createOptionImage = async (src, itemId) => {
+    return await OptionImage.create({src, itemId});
+  }
 
 }
 
