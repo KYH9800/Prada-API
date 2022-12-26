@@ -1,20 +1,35 @@
-
 const { User } = require('../models');
 
 class UsersRepositorys {
+  userCreat = async ({
+    email,
+    hashedpassword,
+    firstName,
+    lastName,
+    country,
+  }) => {
+    await User.create({
+      email,
+      password: hashedpassword,
+      firstName,
+      lastName,
+      country,
+    });
+  };
 
-    userCreat = async ({email, password, firstName, lastName, country}) =>{
-        await User.creat({email, password, firstName, lastName, country})
-    }
+  userFindForLogin = async ({ email }) => {
+    const uesr = await User.findOne({ where: { email } });
+    return uesr;
+  };
 
-    userLogin = async ({}) => {}
-    userLogout = async ({}) => {}
-    userGetInfo = async ({}) => {}
-    userModify = async ({}) => {}
-
- 
-
-
+  //userLogout = async ({}) => {};
+  userGetInfo = async ({ userId }) => {
+    return await User.findOne({
+      where: { userId },
+      attributes: ['email', 'firstName', 'lastName', 'country'],
+    });
+  };
+  userModify = async ({}) => {};
 }
 
 module.exports = UsersRepositorys;
