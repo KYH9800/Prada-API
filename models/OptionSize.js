@@ -4,7 +4,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class OptionSize extends Model {
     static associate(models) {
-      this.belongsTo(models.ItemColor, { foreignKey: 'itemColorId' });
+      this.belongsTo(models.Item, { foreignKey: 'itemId' });
     }
   }
 
