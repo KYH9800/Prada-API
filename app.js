@@ -1,6 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = 3000; // 사용할 Port
+
 
 // morgan: 로깅을 위한 라이브러리, winston도 있습니다. 참고: (winston과 morgan 결합 사용: https://for-development.tistory.com/51)
 const morgan = require('morgan');
