@@ -99,9 +99,35 @@ class WishListRepository {
     return item;
   };
 
-  // 위시리스트 옵션변경 상품조회
-  updateGetItemInWishList = async (itemId, color, size) => {
-    // todo
+  //* 위시리스트 옵션변경 상품조회
+  updateGetItemInWishList = async (itemId, size, color) => {
+    // 받아온 itemId, size, color
+    // OptionSize 찾아오기
+    // size의 item 다 찾기
+    const findSize = await this.optionSizeModel.findAll({
+      size: size,
+    });
+    // ItemColor 찾아오기 -> OptionImage도 찾아오기(1:N 관계 맺고)
+    // color의 item 다 찾기
+    const findColor = await this.itemColorModel.findAll({
+      color: color,
+    });
+    // size와 color가 가진 공통의 item 찾기
+    const commonItemId = findSize.map((itemSize) => {
+      findColor.map((itemColor) => {
+        if (itemSize.itemId === itemColor.itemId) {
+          return itemColor.itemId;
+        }
+      });
+    });
+    // 해당 itemId로 Item 찾기
+    const findItem = await this.itemModel.findOne({
+      where: {
+        itemId: commonItemId,
+      },
+    });
+    //! 해당 아이템을 user의 위시리스트의 아이템으로 update
+    //! 결과 보내주시
   };
 
   // 위시리스트 상품 제거
