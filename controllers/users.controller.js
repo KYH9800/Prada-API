@@ -2,6 +2,12 @@ const UsersService = require('../services/users.service');
 const jwt = require('jsonwebtoken');
 const userService = new UsersService();
 
+const {
+  registerSchema,
+  loginSchema,
+} = require('../validations/user.validation');
+const { post } = require('../routes/auth.routes');
+
 class UsersController {
   userSignupController = async (req, res) => {
     try {
@@ -13,8 +19,8 @@ class UsersController {
         firstName,
         lastName,
         country,
-      } = req.body;
-
+      } = await registerSchema.validateAsync(req.body);
+      
       await userService.userSignupService({
         email,
         emailConfirm,
@@ -35,7 +41,7 @@ class UsersController {
 
   userLoginController = async (req, res) => {
     try {
-      const { email, password } = req.body;
+      const { email, password } = await registerSchema.validateAsync(req.body);
 
       const { accessToken, firstname } = await userService.userLoginService({
         email,
@@ -68,30 +74,33 @@ class UsersController {
       res.status(200).json({ ...result.dataValues });
     } catch (err) {
       console.log(err);
-      res
-        .status(400)
-        .json({
-          errorMessage: '요청 실패: 관리자에게 문의하세요.',
-          result: false,
-        });
+      res.status(400).json({
+        errorMessage: '요청 실패: 관리자에게 문의하세요.',
+        result: false,
+      });
     }
   };
 
   userModifyController = async (req, res) => {
     try {
       const { userId } = res.locals;
-      const { email, password, firstName, lastName, country } = req.body;
+      const { firstName, lastName, country, email, emailConfirm } = req.body;
 
-      await userService.userModifyService({ userId, email, password, firstName, lastName, country});
+      await userService.userModifyService({
+        userId,
+        firstName,
+        lastName,
+        country,
+        email,
+        emailConfirm,
+      });
       res.status(200).json({ message: '회원정보 수정 완료.', result: true });
     } catch (err) {
       console.log(err);
-      res
-        .status(400)
-        .json({
-          errorMessage: '요청 실패: 관리자에게 문의하세요.',
-          result: false,
-        });
+      res.status(400).json({
+        errorMessage: '요청 실패: 관리자에게 문의하세요.',
+        result: false,
+      });
     }
   };
 }
