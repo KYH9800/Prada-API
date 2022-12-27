@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         through: 'WishListItem',
       });
       this.belongsToMany(models.Cart, {
-        foreignKey: 'itemId',
+        foreignKey: 'itemId', // Item.addCart()
         through: 'CartItemList',
       });
       this.belongsToMany(models.OrderList, {
