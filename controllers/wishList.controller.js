@@ -50,9 +50,9 @@ class WishListController {
   // 위시리스트 옵션변경 상품조회
   updateGetItemInWishList = async (req, res) => {
     try {
-      const { itemId, color, size } = req.body;
+      const { itemId, size, color } = req.body;
       const updateGetItemInWishList =
-        await this.wishListService.updateGetItemInWishList(itemId, color, size);
+        await this.wishListService.updateGetItemInWishList(itemId, size, color);
 
       return res.status(200).json({
         data: updateGetItemInWishList,
