@@ -6,31 +6,30 @@ class ItemController {
   //상품 등록
   createItem = async (req, res) => {
     try {
-      const {
-        title,
-        price,
-        color,
-        gender,
-        theme,
-        category,
-        content,
-        material,
-        size,
-        count,
-      } = req.body;
       const src = req.file.location;
-      const createItem = await this.itemService.createItem({
-        title,
-        price,
-        color,
+      const {
         gender,
         theme,
         category,
-        content,
-        src,
-        material,
+        title,
+        price,
         size,
         count,
+        color,
+        content,
+        material,
+      } = req.body;
+      const createItem = await this.itemService.createItem({
+        gender,
+        theme,
+        category,
+        title,
+        price,
+        size,
+        count,
+        color,
+        content,
+        material,
       });
       return res
         .status(201)
