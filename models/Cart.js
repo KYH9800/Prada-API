@@ -2,43 +2,34 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class OrderList extends Model {
+  class Cart extends Model {
     static associate(models) {
       this.belongsTo(models.User, { foreignKey: 'userId' });
       this.belongsToMany(models.Item, {
-        foreignKey: 'orderListId',
-        through: 'OrderListItem',
+        foreignKey: 'cartId', // Cart.addItem(), getItems()
+        through: 'CartItemList',
       });
     }
   }
 
-  OrderList.init(
+  Cart.init(
     {
-      // 모델 속성은 여기서 정의됩니다. row(행, 가로) 부분임
-      orderListId: {
+      cartId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
-      orderNum: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      orderDate: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      orderStatus: {
+      count: {
         type: DataTypes.STRING,
         allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: 'OrderList',
+      modelName: 'Cart',
     }
   );
 
-  return OrderList;
+  return Cart;
 };

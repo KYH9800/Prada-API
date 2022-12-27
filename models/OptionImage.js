@@ -2,34 +2,30 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class ItemInformation extends Model {
+  class OptionImage extends Model {
     static associate(models) {
       this.belongsTo(models.Item, { foreignKey: 'itemId' });
     }
   }
 
-  ItemInformation.init(
+  OptionImage.init(
     {
-      itemInformationId: {
+      optionImageId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
-      content: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      material: {
+      src: {
         type: DataTypes.STRING,
         allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: 'ItemInformation',
+      modelName: 'OptionImage',
     }
   );
 
-  return ItemInformation;
+  return OptionImage;
 };
