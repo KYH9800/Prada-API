@@ -10,6 +10,7 @@ class CartController {
       const { itemId } = req.params;
 
       const addItem = await this.cartService.addItemInCart(itemId, userId);
+      // console.log('CartService addItem: ', addItem);
 
       return res.status(200).json({
         data: addItem,
@@ -19,7 +20,7 @@ class CartController {
     } catch (error) {
       console.log(error);
       return res.status(400).send({
-        errorMessage: '상품 추가 실패',
+        errorMessage: error.message,
         result: false,
       });
     }
@@ -57,14 +58,14 @@ class CartController {
       );
 
       return res.status(200).json({
-        message: '게시글 삭제 완료',
+        message: '장바구니 상품 삭제 완료',
         data: deleteItem,
         result: true,
       });
     } catch (error) {
       console.log(error);
       return res.status(400).send({
-        errorMessage: '상품 제거 실패',
+        errorMessage: error.message,
         result: false,
       });
     }
