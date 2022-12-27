@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "start" : "pm2 app.js"
   },
   "author": "team-sparta-02",
   "license": "ISC",
