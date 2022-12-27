@@ -29,7 +29,14 @@ class UsersRepositorys {
       attributes: ['email', 'firstName', 'lastName', 'country'],
     });
   };
-  userModify = async ({}) => {};
+
+  userModify = async ({ userId, firstName, lastName, country, email }) => {
+    await User.update(
+      { where: { userId } },
+      { firstName, lastName, country, email }
+    );
+    return true;
+  };
 }
 
 module.exports = UsersRepositorys;
