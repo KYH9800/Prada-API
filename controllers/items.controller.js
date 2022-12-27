@@ -49,7 +49,12 @@ class ItemController {
       const { gender, theme } = req.params;
       const { category } = req.query;
 
-      console.log(gender, theme);
+      if (!gender || !theme || !category) {
+        throw {
+          code: 412,
+          errorMessage: '입력값을 확인해주세요.',
+        };
+      }
 
       if (gender !== 'men' && gender !== 'women') {
         throw {
@@ -57,21 +62,23 @@ class ItemController {
           errorMessage: '입력된 성별 형식이 올바르지 않습니다.',
         };
       }
-      if (theme !== theme) {
-        throw {
-          code: 412,
-          errorMessage: '입력된 테마 형식이 올바르지 않습니다.',
-        };
-      }
+      // if (theme !== theme) {
+      //   throw {
+      //     code: 412,
+      //     errorMessage: '입력된 테마 형식이 올바르지 않습니다.',
+      //   };
+      // }
 
       // 서비스한테 비즈니스 로직을 수행해서 값을 내놔라.
-      const data = await this.itemService.findAllItem({
+      const result = await this.itemService.findAllItem({
         gender,
         theme,
         category,
       });
 
-      return res.status(200).json({ data });
+      console.log('result test:', result);
+
+      return res.status(200).json({ result });
     } catch (error) {
       console.error(error);
       if (error.code) {
