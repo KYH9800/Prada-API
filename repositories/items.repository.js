@@ -287,6 +287,25 @@ class ItemRepository {
       where: {
         itemId: itemId,
       },
+      attributes: ['itemId', 'title', 'price'],
+      include: [
+        {
+          model: ItemColor,
+          attributes: ['color'],
+        },
+        {
+          model: OptionSize,
+          attributes: ['size', 'count'],
+        },
+        {
+          model: ItemInformation,
+          attributes: ['content', 'material'],
+        },
+        {
+          model: OptionImage,
+          attributes: ['src'],
+        },
+      ],
     });
 
     if (!item) {
