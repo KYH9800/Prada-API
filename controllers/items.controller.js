@@ -52,38 +52,17 @@ class ItemController {
   findAllItem = async (req, res) => {
     try {
       const { gender, theme } = req.params;
+      console.log('gender, theme: ', gender, theme);
       const { category } = req.query;
+      console.log('category: ', category);
 
-      if (!gender || !theme || !category) {
-        throw {
-          code: 412,
-          errorMessage: '입력값을 확인해주세요.',
-        };
-      }
-
-      if (gender !== 'men' && gender !== 'women') {
-        throw {
-          code: 412,
-          errorMessage: '입력된 성별 형식이 올바르지 않습니다.',
-        };
-      }
-      // if (theme !== theme) {
-      //   throw {
-      //     code: 412,
-      //     errorMessage: '입력된 테마 형식이 올바르지 않습니다.',
-      //   };
-      // }
-      
-      // 서비스한테 비즈니스 로직을 수행해서 값을 내놔라.
-      const result = await this.itemService.findAllItem({
+      const result = await this.itemService.findAllItem(
         gender,
         theme,
-        category,
-      });
+        category
+      );
 
-      console.log('result test:', result);
-
-      return res.status(200).json({ result });
+      return res.status(200).json({ data: result });
     } catch (error) {
       console.error(error);
       if (error.code) {
@@ -163,7 +142,6 @@ class ItemController {
           .json({ errorMessage: error.errorMessage });
       } else {
         return res.status(400).json({ errorMessage: '상품 수정 실패' });
-
       }
     }
   };
