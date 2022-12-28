@@ -92,6 +92,23 @@ class ItemService {
       return result;
     }
   };
+
+  // 상품 삭제
+  deleteItem = async ({ itemId }) => {
+    const isExistItem = await this.itemRepository.deleteItem({ itemId });
+    if (!isExistItem) {
+      throw { code: 404, errorMessage: '상품이 존재하지 않습니다.' };
+    } else {
+      if (isExistItem) {
+        return await this.itemRepository.deleteItem({ itemId });
+      } else {
+        throw {
+          code: 400,
+          message: '관리자 이외에 상품을 삭제할 수 없습니다.',
+        };
+      }
+    }
+  };
 }
 
 module.exports = ItemService;
