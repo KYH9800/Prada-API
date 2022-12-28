@@ -5,24 +5,39 @@ class ItemService {
   itemRepository = new ItemRepository();
 
   //상품 등록
-  createItem = async ({
-    title,
-    price,
-    color,
+  createItem = async (
     gender,
     theme,
     category,
-    content,
-    src,
-    material,
+    title,
+    price,
     size,
     count,
-  }) => {
+    color,
+    content,
+    material,
+    src
+  ) => {
+    if (!gender) {
+      throw { errorMessage: '성별이 등록되지 않았습니다.', code: 412 };
+    }
+    if (!theme) {
+      throw { errorMessage: '테마가 등록되지 않았습니다.', code: 412 };
+    }
+    if (!category) {
+      throw { errorMessage: '카테고리가 등록되지 않았습니다.', code: 412 };
+    }
     if (!title) {
       throw { errorMessage: '상품명이 등록되지 않았습니다.', code: 412 };
     }
     if (!price) {
       throw { errorMessage: '가격이 등록되지 않았습니다.', code: 412 };
+    }
+    if (!size) {
+      throw { errorMessage: '사이즈가 등록되지 않았습니다.', code: 412 };
+    }
+    if (!count) {
+      throw { errorMessage: '상품 수량이 등록되지 않았습니다.', code: 412 };
     }
     if (!color) {
       throw { errorMessage: '색상이 등록되지 않았습니다.', code: 412 };
@@ -32,46 +47,59 @@ class ItemService {
     }
     if (!material) {
       throw { errorMessage: '소재가 등록되지 않았습니다.', code: 412 };
-    }
-    if (!src) {
+    } // console.log('src.location: ', src.length);
+    if (src.length === 0) {
       throw { errorMessage: '이미지가 추가되지 않았습니다.', code: 412 };
     }
-    const createItemDetail = await this.itemRepository.createItemDetail({
+
+    // 카테고리 등록
+    const createItemDetail = await this.itemRepository.createItemDetail(
       gender,
       theme,
-      category,
-    });
-    const createContent = await this.itemRepository.createContent(
-      title,
-      price,
-      createItemDetail.itemDetailId
+      category
     );
-    const createColor = await this.itemRepository.createColor({
-      color,
-      itemId: createContent.itemId,
-    });
-    const createItemInfo = await this.itemRepository.createItemInfo({
-      content,
-      src,
-      material,
-      itemId: createContent.itemId,
-    });
-    const createOptionImage = await this.itemRepository.createOptionImage({
-      src,
-      itemId: createContent.itemId,
-    });
-    const createOptionSize = await this.itemRepository.createOptionSize({
-      size,
-      count,
-      itemId: createContent.itemId,
-    });
+
+    // 메인 상품정보 등록
+    const createContent = await this.itemRepository.createContent(
+      title, // 상품명
+      price, // 가격
+      createItemDetail.itemDetailId // 카테고리 테이블 아이디
+    );
+
+    // 사이즈, 수량 등록
+    const createOptionSize = await this.itemRepository.createOptionSize(
+      size, // 사이즈
+      count, // 수량
+      createContent.itemId // 상품 아이디
+    );
+
+    // 색상 등록
+    const createColor = await this.itemRepository.createColor(
+      color, // 색상
+      createContent.itemId // 상품 아이디
+    );
+
+    // 상품 정보
+    const createItemInfo = await this.itemRepository.createItemInfo(
+      content, // 정보
+      material, // 소재
+      createContent.itemId // 상품 아이디
+    );
+
+    // 상품 이미지 등록
+    const createOptionImage = await this.itemRepository.createOptionImage(
+      src, // 이미지 경로
+      createContent.itemId, // 상품 아이디
+      createColor.itemColorId // 아이템 색상 아이디
+    );
+
     return {
-      createContent,
-      createColor,
-      createItemDetail,
-      createItemInfo,
-      createOptionImage,
-      createOptionSize,
+      ItemDetail: createItemDetail,
+      Content: createContent,
+      OptionSize: createOptionSize,
+      Color: createColor,
+      ItemInfo: createItemInfo,
+      OptionImage: createOptionImage,
     };
   };
 
@@ -102,6 +130,67 @@ class ItemService {
       });
       return result;
     }
+  };
+
+  // 상품 상세 조회
+  getItemDetailInformation = async (itemId) => {
+    const findOneItem = await this.itemRepository.getItemDetailInformation(
+      itemId
+    );
+
+    return findOneItem;
+  };
+
+  // 상품 수정
+  patchItem = async (
+    itemId, // 상품 아이디
+    title, // 상품명
+    price, // 가격
+    color, // 색상
+    size, // 사이즈
+    count, // 수량
+    content, // 상품 설명
+    material, // 소재
+    src // 이미지 경로
+  ) => {
+    if (!title) {
+      throw { errorMessage: '상품명이 등록되지 않았습니다.', code: 412 };
+    }
+    if (!price) {
+      throw { errorMessage: '가격이 등록되지 않았습니다.', code: 412 };
+    }
+    if (!color) {
+      throw { errorMessage: '색상이 등록되지 않았습니다.', code: 412 };
+    }
+    if (!size) {
+      throw { errorMessage: '사이즈가 등록되지 않았습니다.', code: 412 };
+    }
+    if (!count) {
+      throw { errorMessage: '상품 수량이 등록되지 않았습니다.', code: 412 };
+    }
+    if (!content) {
+      throw { errorMessage: '상품 설명이 등록되지 않았습니다.', code: 412 };
+    }
+    if (!material) {
+      throw { errorMessage: '소재가 등록되지 않았습니다.', code: 412 };
+    }
+    if (src.length === 0) {
+      throw { errorMessage: '이미지가 추가되지 않았습니다.', code: 412 };
+    }
+
+    const updateItem = await this.itemRepository.patchItem(
+      itemId, // 상품 아이디
+      title, // 상품명
+      price, // 가격
+      color, // 색상
+      size, // 사이즈
+      count, // 수량
+      content, // 상품 설명
+      material, // 소재
+      src // 이미지 경로
+    );
+
+    return updateItem;
   };
 }
 
