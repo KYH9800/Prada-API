@@ -30,12 +30,12 @@ class UsersController {
         lastName,
         country,
       });
-      res.status(200).json({ messge: '회원가입 성공' });
+      res.status(200).json({ message: '회원가입 성공' });
     } catch (err) {
       console.log(err);
       res
         .status(400)
-        .json({ errorMessge: '요청한 데이터의 형식이 올바르지 않습니다.' });
+        .json({ errorMessage: '요청한 데이터의 형식이 올바르지 않습니다.' });
     }
   };
 
@@ -52,7 +52,7 @@ class UsersController {
       console.log(err);
       res
         .status(400)
-        .json({ errorMessge: '요청한 데이터의 형식이 올바르지 않습니다.' });
+        .json({ errorMessage: '요청한 데이터의 형식이 올바르지 않습니다.' });
     }
   };
 
@@ -62,7 +62,7 @@ class UsersController {
       console.log(err);
       res
         .status(400)
-        .json({ errorMessge: '요청한 데이터의 형식이 올바르지 않습니다.' });
+        .json({ errorMessage: '요청한 데이터의 형식이 올바르지 않습니다.' });
     }
   };
 
