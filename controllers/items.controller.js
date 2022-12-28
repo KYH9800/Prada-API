@@ -6,7 +6,8 @@ class ItemController {
   //상품 등록
   createItem = async (req, res) => {
     try {
-      const src = req.file.location;
+      const src = req.files;
+
       const {
         gender,
         theme,
@@ -19,7 +20,8 @@ class ItemController {
         content,
         material,
       } = req.body;
-      const createItem = await this.itemService.createItem({
+
+      const createItem = await this.itemService.createItem(
         gender,
         theme,
         category,
@@ -30,11 +32,14 @@ class ItemController {
         color,
         content,
         material,
-      });
+        src
+      );
+
       return res
         .status(201)
         .json({ Message: '상품 등록 완료', data: createItem });
     } catch (err) {
+      console.log(err);
       if (err.code) {
         return res.status(err.code).json({ errorMessage: err.errorMessage });
       } else {
@@ -78,6 +83,60 @@ class ItemController {
         res.status(error?.code).json({ errorMessage: error?.errorMessage });
       } else {
         res.status(500).json({ errorMessage: '알 수 없는 에러' });
+      }
+    }
+  };
+
+  // 상품 상세 조회
+  getItemDetailInformation = async (req, res) => {
+    try {
+      const { itemId } = req.params;
+      const findOneItem = await this.itemService.getItemDetailInformation(
+        itemId
+      );
+
+      return res.status(200).send({
+        data: findOneItem,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send({
+        errorMessage: error.message,
+      });
+    }
+  };
+
+  // 상품 수정
+  patchItem = async (req, res) => {
+    try {
+      const src = req.files;
+      const { title, price, color, size, count, content, material } = req.body;
+      const { itemId } = req.params;
+
+      const updateItem = await this.itemService.patchItem(
+        itemId, // 상품 아이디
+        title, // 상품명
+        price, // 가격
+        color, // 색상
+        size, // 사이즈
+        count, // 수량
+        content, // 상품 설명
+        material, // 소재
+        src // 이미지 경로
+      );
+
+      return res.status(201).send({
+        data: updateItem,
+        message: '상품 수정 완료',
+      });
+    } catch (error) {
+      console.log(error);
+      if (error.code) {
+        return res
+          .status(error.code)
+          .json({ errorMessage: error.errorMessage });
+      } else {
+        return res.status(400).json({ errorMessage: '상품 수정 실패' });
       }
     }
   };
