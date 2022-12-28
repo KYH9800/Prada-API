@@ -41,7 +41,7 @@ class UsersController {
 
   userLoginController = async (req, res) => {
     try {
-      const { email, password } = await registerSchema.validateAsync(req.body);
+      const { email, password } = await loginSchema.validateAsync(req.body);
 
       const { accessToken, firstname } = await userService.userLoginService({
         email,
