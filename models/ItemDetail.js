@@ -1,4 +1,4 @@
-'use strict'; 
+'use strict';
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -17,15 +17,15 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
       },
       gender: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING,
         allowNull: false,
       },
       theme: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING,
         allowNull: false,
       },
       category: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },
