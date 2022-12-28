@@ -20,6 +20,7 @@ class ItemRepository {
   // 메인 상품정보 등록
   createContent = async (title, price, itemDetailId) => {
     try {
+      // console.log('title, price, itemDetailId: ', title, price, itemDetailId);
       console.log('title: ', title);
       console.log('price: ', price);
       console.log('itemDetailId: ', itemDetailId);
@@ -210,8 +211,18 @@ class ItemRepository {
         code: 412,
         errorMessage: '입력된 카테고리 형식이 올바르지 않습니다.',
       };
+    } finally {
+      const result = await ItemDetail.findAll({
+        where: { gender, theme },
+      });
+      return result;
     }
   };
+
+  // 상품 삭제
+  deleteItem = async ({ itemId }) => {
+    return await Item.destroy({ where: { itemId } });
+  }
 
   // 상품 상세 조회
   getItemDetailInformation = async (itemId) => {

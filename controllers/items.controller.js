@@ -73,7 +73,7 @@ class ItemController {
       //     errorMessage: '입력된 테마 형식이 올바르지 않습니다.',
       //   };
       // }
-
+      
       // 서비스한테 비즈니스 로직을 수행해서 값을 내놔라.
       const result = await this.itemService.findAllItem({
         gender,
@@ -90,6 +90,25 @@ class ItemController {
         res.status(error?.code).json({ errorMessage: error?.errorMessage });
       } else {
         res.status(500).json({ errorMessage: '알 수 없는 에러' });
+      }
+    }
+  };
+
+  // 상품 삭제
+  deleteItem = async (req, res) => {
+    try {
+      // const { adminId } = res.locals.user;
+      const { itemId } = req.params;
+      await this.itemService.deleteItem({ itemId });
+      return res.status(201).json({ Message: '상품 삭제 완료' });
+    } catch (error) {
+      console.error(error);
+      if (error.code) {
+        return res
+          .status(error?.code)
+          .json({ errorMessage: error?.errorMessage });
+      } else {
+        return res.status(400).json({ errorMessage: '상품 삭제 실패' });
       }
     }
   };
@@ -144,6 +163,7 @@ class ItemController {
           .json({ errorMessage: error.errorMessage });
       } else {
         return res.status(400).json({ errorMessage: '상품 수정 실패' });
+
       }
     }
   };
