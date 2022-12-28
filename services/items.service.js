@@ -78,16 +78,27 @@ class ItemService {
   //테마, 카테고리별 상품 조회
   findAllItem = async ({ gender, theme, category }) => {
     if (!category) {
-      const result = await this.itemRepository.findAllItem({
+      const itemId = await this.itemRepository.findAllItem({
         gender: gender,
         theme: theme,
       });
+
+      console.log('itemId test:', itemId);
+      const result = await this.itemRepository.findItemFromItemTable({
+        itemId,
+      });
+
       return result;
     } else {
-      const result = await this.itemRepository.findAllItem({
+      const itemId = await this.itemRepository.findAllItemcate({
         gender: gender,
         theme: theme,
         category: category,
+      });
+
+      console.log('someId test:', itemId);
+      const result = await this.itemRepository.findAllItemWithCategory({
+        itemId,
       });
       return result;
     }

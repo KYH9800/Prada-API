@@ -67,10 +67,135 @@ class ItemRepository {
   };
 
   //테마별, 카테고리별 상품 조회
-  findAllItem = async ({ gender, theme, category }) => {
+  findAllItem = async ({ gender, theme }) => {
     try {
-      const result = await ItemDetail.findAll({
+      const itemsId = await ItemDetail.findAll({
+        where: { gender, theme },
+        attributes: ['itemId'],
+      });
+      return itemsId;
+    } catch {
+      throw {
+        code: 412,
+        errorMessage: '입력된 카테고리 형식이 올바르지 않습니다.',
+      };
+    }
+  };
+
+  //상품 추가 후 테스트 하면서 진행필요. 221228_0840AM KYS
+  findItemFromItemTable = async ({ itemId }) => {
+    try {
+      const result = await Item.findAll({
+        where: { itemId },
+        attributes: [
+          'title',
+          'price',
+          'mainImage',
+          [Sequelize.col('ItemColor.color'), 'color'],
+          [Sequelize.col('OptionSize.size'), 'size'],
+          [Sequelize.col('ItemInformation.content'), 'content'],
+          [Sequelize.col('ItemInformation.material'), 'material'],
+          [Sequelize.col('ItemInformation.mainImage'), 'mainImage'],
+        ],
+
+        include: [
+          {
+            model: ItemColor,
+            as: 'itemId',
+            required: true,
+
+            attributes: [],
+          },
+        ],
+
+        include: [
+          {
+            model: OptionSize,
+            as: 'itemId',
+            required: true,
+
+            attributes: [],
+          },
+        ],
+
+        include: [
+          {
+            model: ItemInformation,
+            as: 'itemId',
+            required: true,
+
+            attributes: [],
+          },
+        ],
+      });
+      return result;
+    } catch {
+      throw {
+        code: 412,
+        errorMessage: '입력된 카테고리 형식이 올바르지 않습니다.',
+      };
+    }
+  };
+
+  findAllItemcate = async ({ gender, theme, category }) => {
+    try {
+      const itemsId = await ItemDetail.findAll({
         where: { gender, theme, category },
+        attributes: ['itemId'],
+      });
+      return itemsId;
+    } catch {
+      throw {
+        code: 412,
+        errorMessage: '입력된 카테고리 형식이 올바르지 않습니다.',
+      };
+    }
+  };
+
+  findAllItemWithCategory = async ({ itemId }) => {
+    try {
+      const result = await Item.findAll({
+        where: { itemId },
+        attributes: [
+          'title',
+          'price',
+          'mainImage',
+          [Sequelize.col('ItemColor.color'), 'color'],
+          [Sequelize.col('OptionSize.size'), 'size'],
+          [Sequelize.col('ItemInformation.content'), 'content'],
+          [Sequelize.col('ItemInformation.material'), 'material'],
+          [Sequelize.col('ItemInformation.mainImage'), 'mainImage'],
+        ],
+
+        include: [
+          {
+            model: ItemColor,
+            as: 'itemId',
+            required: true,
+
+            attributes: [],
+          },
+        ],
+
+        include: [
+          {
+            model: OptionSize,
+            as: 'itemId',
+            required: true,
+
+            attributes: [],
+          },
+        ],
+
+        include: [
+          {
+            model: ItemInformation,
+            as: 'itemId',
+            required: true,
+
+            attributes: [],
+          },
+        ],
       });
       return result;
     } catch {
