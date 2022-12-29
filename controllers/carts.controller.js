@@ -29,6 +29,7 @@ class CartController {
   // 장바구니 상품 조회
   getItemInCart = async (req, res) => {
     try {
+      // const userId = 1;
       const { userId } = res.locals;
       const userCart = await this.cartService.getItemInCart(userId);
 

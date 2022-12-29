@@ -51,9 +51,9 @@ class ItemController {
   findAllItem = async (req, res) => {
     try {
       const { gender, theme } = req.params;
-      console.log('gender, theme: ', gender, theme);
+      // console.log('gender, theme: ', gender, theme);
       const { category } = req.query;
-      console.log('category: ', category);
+      // console.log('category-01: ', category);
 
       if (!gender || !theme || !category) {
         throw {
@@ -75,12 +75,13 @@ class ItemController {
       //   };
       // }
 
+      // console.log('category-02: ', category);
       // 서비스한테 비즈니스 로직을 수행해서 값을 내놔라.
-      const result = await this.itemService.findAllItem({
+      const result = await this.itemService.findAllItem(
         gender,
         theme,
-        category,
-      });
+        category
+      );
 
       return res.status(200).json({ data: result });
     } catch (error) {
