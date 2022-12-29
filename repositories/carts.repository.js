@@ -104,7 +104,7 @@ class CartRepository {
   deleteItemInCart = async (cartId, userId) => {
     const findCartList = await this.cartModel.findOne({
       where: {
-        cartId: cartId,
+        userId: userId,
       },
     });
 
@@ -117,7 +117,7 @@ class CartRepository {
     const deleteItem = await this.cartModel.destroy({
       where: {
         userId: userId,
-        cartId: cartId,
+        cartId: findCartList.cartId,
       },
     });
 

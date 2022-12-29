@@ -178,7 +178,7 @@ class WishListRepository {
   deleteItemInWishList = async (wishListId, userId) => {
     const findWishList = await this.wishListModel.findOne({
       where: {
-        wishListId: wishListId,
+        userId: userId,
       },
     });
 
@@ -191,7 +191,7 @@ class WishListRepository {
     const deleteItem = await this.wishListModel.destroy({
       where: {
         userId: userId,
-        wishListId: wishListId,
+        wishListId: findWishList.wishListId,
       },
     });
 

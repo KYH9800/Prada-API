@@ -23,7 +23,7 @@ module.exports = multer({
       const filiname = path.basename(file.originalname).trim(); //sdfhsjgjww_Sfdh235_Sfjshkgks
       console.log('filiname: ', filiname);
 
-      // let newFileName = '';
+      let newFileName = 'test';
       // const regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
       // let reg = /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim;
 
