@@ -7,6 +7,7 @@ class CartController {
   addItemInCart = async (req, res) => {
     try {
       const { userId } = res.locals;
+      console.log('userId: ', userId);
       const { itemId } = req.params;
 
       const addItem = await this.cartService.addItemInCart(itemId, userId);
