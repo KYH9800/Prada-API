@@ -7,7 +7,6 @@ class ItemController {
   createItem = async (req, res) => {
     try {
       const src = req.files;
-
       const {
         gender,
         theme,
@@ -56,7 +55,28 @@ class ItemController {
       const { category } = req.query;
       console.log('category: ', category);
 
-      const result = await this.itemService.findAllItem(
+      if (!gender || !theme || !category) {
+        throw {
+          code: 412,
+          errorMessage: '입력값을 확인해주세요.',
+        };
+      }
+
+      if (gender !== 'men' && gender !== 'women') {
+        throw {
+          code: 412,
+          errorMessage: '입력된 성별 형식이 올바르지 않습니다.',
+        };
+      }
+      // if (theme !== theme) {
+      //   throw {
+      //     code: 412,
+      //     errorMessage: '입력된 테마 형식이 올바르지 않습니다.',
+      //   };
+      // }
+
+      // 서비스한테 비즈니스 로직을 수행해서 값을 내놔라.
+      const result = await this.itemService.findAllItem({
         gender,
         theme,
         category

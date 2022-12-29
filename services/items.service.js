@@ -86,11 +86,17 @@ class ItemService {
       createContent.itemId // 상품 아이디
     );
 
-    // 상품 이미지 등록
+    // 상품 옵션이미지 등록
     const createOptionImage = await this.itemRepository.createOptionImage(
       src, // 이미지 경로
       createContent.itemId, // 상품 아이디
       createColor.itemColorId // 아이템 색상 아이디
+    );
+
+    // 상품 메인이미지 등록
+    const createMainImage = await this.itemRepository.createMainImage(
+      src,
+      createContent.itemId
     );
 
     return {
@@ -100,6 +106,7 @@ class ItemService {
       Color: createColor,
       ItemInfo: createItemInfo,
       OptionImage: createOptionImage,
+      MainImage: createMainImage,
     };
   };
 
