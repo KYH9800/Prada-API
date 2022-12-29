@@ -7,6 +7,7 @@ class WishListController {
     try {
       // const userId = 1;
       const { userId } = res.locals;
+      console.log('userId: ', userId);
       const { itemId } = req.params;
       const addItemInWishList = await this.wishListService.addItemInWishList(
         itemId,
