@@ -54,7 +54,7 @@ class UsersService {
         expiresIn: '24h',
       }
     );
-
+    // console.log('accessToken: ', accessToken);
     const firstname = user.firstName;
     return { accessToken, firstname };
   };
