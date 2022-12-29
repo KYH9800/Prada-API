@@ -31,14 +31,14 @@ exports.registerSchema = Joi.object().keys({
     'any.required': 'NO PW INPUT',
   }),
   firstName: Joi.string()
-    .pattern(new RegExp('^[a-zA-Z0-9가-힇]{4,15}$'))
+    .pattern(new RegExp('^[a-zA-Z0-9가-힇]{1,15}$'))
     .required()
     .messages({
       'string.pattern.base': 'WRONG NICKNAME PATTERN',
       'any.required': 'NO NICKNAME INPUT',
     }),
   lastName: Joi.string()
-    .pattern(new RegExp('^[a-zA-Z0-9가-힇]{4,15}$'))
+    .pattern(new RegExp('^[a-zA-Z0-9가-힇]{1,15}$'))
     .required()
     .messages({
       'string.pattern.base': 'WRONG NICKNAME PATTERN',

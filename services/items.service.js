@@ -111,30 +111,20 @@ class ItemService {
   };
 
   //테마, 카테고리별 상품 조회
-  findAllItem = async ({ gender, theme, category }) => {
+  findAllItem = async (gender, theme, category) => {
+    // 카테고리가 없으면
     if (!category) {
-      const itemId = await this.itemRepository.findAllItem({
-        gender: gender,
-        theme: theme,
-      });
-
-      console.log('itemId test:', itemId);
-      const result = await this.itemRepository.findItemFromItemTable({
-        itemId,
-      });
+      const result = await this.itemRepository.findAllItem(gender, theme);
 
       return result;
     } else {
-      const itemId = await this.itemRepository.findAllItemcate({
-        gender: gender,
-        theme: theme,
-        category: category,
-      });
+      console.log('여기');
+      const result = await this.itemRepository.findAllItemWithCategory(
+        gender,
+        theme,
+        category
+      );
 
-      console.log('someId test:', itemId);
-      const result = await this.itemRepository.findAllItemWithCategory({
-        itemId,
-      });
       return result;
     }
   };

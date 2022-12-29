@@ -20,7 +20,7 @@ class UsersController {
         lastName,
         country,
       } = await registerSchema.validateAsync(req.body);
-      
+
       await userService.userSignupService({
         email,
         emailConfirm,
@@ -30,18 +30,19 @@ class UsersController {
         lastName,
         country,
       });
-      res.status(200).json({ messge: '회원가입 성공' });
+      res.status(200).json({ message: '회원가입 성공' });
     } catch (err) {
       console.log(err);
       res
         .status(400)
-        .json({ errorMessge: '요청한 데이터의 형식이 올바르지 않습니다.' });
+        .json({ message: '요청한 데이터의 형식이 올바르지 않습니다.' });
     }
   };
 
   userLoginController = async (req, res) => {
     try {
-      const { email, password } = await registerSchema.validateAsync(req.body);
+      const { email, password } = await loginSchema.validateAsync(req.body);
+      console.log('userLoginController: ', email, password);
 
       const { accessToken, firstname } = await userService.userLoginService({
         email,
@@ -52,7 +53,7 @@ class UsersController {
       console.log(err);
       res
         .status(400)
-        .json({ errorMessge: '요청한 데이터의 형식이 올바르지 않습니다.' });
+        .json({ message: '요청한 데이터의 형식이 올바르지 않습니다.' });
     }
   };
 
@@ -62,7 +63,7 @@ class UsersController {
       console.log(err);
       res
         .status(400)
-        .json({ errorMessge: '요청한 데이터의 형식이 올바르지 않습니다.' });
+        .json({ message: '요청한 데이터의 형식이 올바르지 않습니다.' });
     }
   };
 
@@ -75,7 +76,7 @@ class UsersController {
     } catch (err) {
       console.log(err);
       res.status(400).json({
-        errorMessage: '요청 실패: 관리자에게 문의하세요.',
+        message: '요청 실패: 관리자에게 문의하세요.',
         result: false,
       });
     }
@@ -98,7 +99,7 @@ class UsersController {
     } catch (err) {
       console.log(err);
       res.status(400).json({
-        errorMessage: '요청 실패: 관리자에게 문의하세요.',
+        message: '요청 실패: 관리자에게 문의하세요.',
         result: false,
       });
     }

@@ -15,36 +15,9 @@ class UsersService {
     lastName,
     country,
   }) => {
-    if (!email) {
-      throw new ApiError('이메일이 입력되지 않았습니다.', 412);
-    }
-
-    if (!password) {
-      throw new ApiError('비밀번호가 입력되지 않았습니다.', 412);
-    }
-
-    if (!firstName) {
-      throw new ApiError('이름이 입력되지 않았습니다.', 412);
-    }
-
-    if (!lastName) {
-      throw new ApiError('성별이 입력되지 않았습니다.', 412);
-    }
-
-    if (!country) {
-      throw new ApiError('나라를 선택해주세요.', 412);
-    }
-
-    if (!emailConfirm || !passwordConfirm) {
-      throw new ApiError('요청한 데이터의 형식이 올바르지 않습니다.', 412);
-    }
-
-    if (email != emailConfirm) {
-      throw new ApiError('이메일이 일치하지 않습니다.', 412);
-    }
-
-    if (password != passwordConfirm) {
-      throw new ApiError('비밀번호가 일치하지 않습니다.', 412);
+    const result = await usersrepository.userCheck({ email });
+    if (result) {
+      throw new ApiError('이미 존재하는 유저', 400);
     }
     const hashedpassword = await bcrypt.hash(
       password,
@@ -59,19 +32,19 @@ class UsersService {
     });
     return true;
   };
-  
+
   userLoginService = async ({ email, password }) => {
     //TODO: 이메일 형식이 맞는지 검증하는 API 필요
 
     if (!email || !password) {
-      throw new ApiError('email 또는 password가 없습니다.', 400);
+      throw new ApiError('email 또는 password값이 없음', 400);
     }
     const user = await usersrepository.userFindForLogin({ email });
-    
+
     const Comparedpassword = await bcrypt.compare(password, user.password);
 
     if (!user || !Comparedpassword) {
-      throw new ApiError('email 또는 password가 일치하지 않습니다.', 400);
+      throw new ApiError('email 또는 password가 틀리다.', 400);
     }
 
     const accessToken = jwt.sign(
@@ -81,10 +54,9 @@ class UsersService {
         expiresIn: '24h',
       }
     );
+
     const firstname = user.firstName;
     return { accessToken, firstname };
-
-    
   };
 
   userLogoutService = async (req, res) => {};
@@ -96,14 +68,27 @@ class UsersService {
     return await usersrepository.userGetInfo({ userId });
   };
 
-  userModifyService = async ({ userId,  firstName, lastName, country, email, emailConfirm}) => {
-
-    if(!userId || !firstName || !lastName || !country || !email || !emailConfirm){
-      throw new ApiError("입력 body 오류", 400);
+  userModifyService = async ({
+    userId,
+    firstName,
+    lastName,
+    country,
+    email,
+    emailConfirm,
+  }) => {
+    if (
+      !userId ||
+      !firstName ||
+      !lastName ||
+      !country ||
+      !email ||
+      !emailConfirm
+    ) {
+      throw new ApiError('입력 body 오류', 400);
     }
 
-    if(email !== emailConfirm){
-      throw new ApiError("이메일이 다름", 400)
+    if (email !== emailConfirm) {
+      throw new ApiError('이메일이 다름', 400);
     }
 
     // const hashedpassword = await bcrypt.hash(
@@ -117,9 +102,14 @@ class UsersService {
     // if(!user || !Comparedpassword){
     //   throw new ApiError("현재 비밀번호가 틀려서 에러가 났어요", 400)
     // }
-    
 
-    await usersrepository.userModify({userId,  firstName, lastName, country, email});
+    await usersrepository.userModify({
+      userId,
+      firstName,
+      lastName,
+      country,
+      email,
+    });
     return true;
   };
 }

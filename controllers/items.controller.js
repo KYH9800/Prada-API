@@ -51,7 +51,9 @@ class ItemController {
   findAllItem = async (req, res) => {
     try {
       const { gender, theme } = req.params;
+      console.log('gender, theme: ', gender, theme);
       const { category } = req.query;
+      console.log('category: ', category);
 
       if (!gender || !theme || !category) {
         throw {
@@ -77,12 +79,10 @@ class ItemController {
       const result = await this.itemService.findAllItem({
         gender,
         theme,
-        category,
-      });
+        category
+      );
 
-      console.log('result test:', result);
-
-      return res.status(200).json({ result });
+      return res.status(200).json({ data: result });
     } catch (error) {
       console.error(error);
       if (error.code) {

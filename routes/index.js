@@ -15,8 +15,12 @@ router.use('/user', wishListRouter);
 const itemRouter = require('./items.routes');
 router.use('/items', itemRouter);
 
-// 관리자 로그인, 회원가입 라우터
+// 관리자 로그인, 회원가입 라우터: 진솔 마데카솔
 const adminUserRouter = require('./adminUser.auth.routes');
 router.use('/admin', adminUserRouter);
+
+// 관리자용 전체 상품 조회 라우터: 윤혁
+const adminRouter = require('./admin.routes');
+router.use('/admin/items', adminRouter);
 
 module.exports = router;

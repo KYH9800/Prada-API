@@ -94,13 +94,89 @@ class ItemRepository {
   };
 
   //테마별, 카테고리별 상품 조회
-  findAllItem = async ({ gender, theme }) => {
+  findAllItem = async (gender, theme) => {
+    console.log('gender, theme: ', gender, theme);
     try {
-      const itemsId = await ItemDetail.findAll({
-        where: { gender, theme },
-        attributes: ['itemId'],
+      const items = await ItemDetail.findAll({
+        where: {
+          gender: gender,
+          theme: theme,
+        },
+        include: [
+          {
+            model: Item,
+          },
+        ],
       });
-      return itemsId;
+      // console.log('genderItems: ', items);
+      const where = {
+        itemId: items.map((v) => v.Items.map((v) => v.itemId)),
+      };
+
+      //! 위시리스트 상태도 보내주기: 로그인한 userId 필요
+      // 테이블보고 로직 생각해라 윤혁아
+      const result = await Item.findAll({
+        where,
+        attributes: ['itemId', 'title', 'price'],
+        include: [
+          {
+            model: OptionImage,
+            attributes: ['src'],
+          },
+          {
+            model: ItemColor,
+            attributes: ['color'],
+          },
+        ],
+      });
+
+      return result;
+    } catch {
+      throw {
+        code: 412,
+        errorMessage: '입력된 카테고리 형식이 올바르지 않습니다.',
+      };
+    }
+  };
+
+  //! 위시리스트 상태도 보내주기: 로그인한 userId 필요
+  // 테이블보고 로직 생각해라 윤혁아
+  findAllItemWithCategory = async (gender, theme, category) => {
+    console.log('gender, theme, category: ', gender, theme, category);
+    try {
+      const items = await ItemDetail.findAll({
+        where: {
+          gender: gender,
+          theme: theme,
+          category: category,
+        },
+        include: [
+          {
+            model: Item,
+          },
+        ],
+      });
+      // console.log('genderItems: ', items);
+      const where = {
+        itemId: items.map((v) => v.Items.map((v) => v.itemId)),
+      };
+
+      const result = await Item.findAll({
+        where,
+        attributes: ['itemId', 'title', 'price'],
+        include: [
+          {
+            model: OptionImage,
+            attributes: ['optionImageId', 'src'],
+          },
+          {
+            model: ItemColor,
+            attributes: ['color'],
+          },
+        ],
+      });
+
+      return result;
     } catch {
       throw {
         code: 412,
@@ -164,79 +240,64 @@ class ItemRepository {
     }
   };
 
-  findAllItemcate = async ({ gender, theme, category }) => {
-    try {
-      const itemsId = await ItemDetail.findAll({
-        where: { gender, theme, category },
-        attributes: ['itemId'],
-      });
-      return itemsId;
-    } catch {
-      throw {
-        code: 412,
-        errorMessage: '입력된 카테고리 형식이 올바르지 않습니다.',
-      };
-    }
-  };
+  // findAllItemWithCategory = async ({ itemId }) => {
+  //   try {
+  //     const result = await Item.findAll({
+  //       where: { itemId },
+  //       attributes: [
+  //         'title',
+  //         'price',
+  //         'mainImage',
+  //         [Sequelize.col('ItemColor.color'), 'color'],
+  //         [Sequelize.col('OptionSize.size'), 'size'],
+  //         [Sequelize.col('ItemInformation.content'), 'content'],
+  //         [Sequelize.col('ItemInformation.material'), 'material'],
+  //         [Sequelize.col('ItemInformation.mainImage'), 'mainImage'],
+  //       ],
 
-  findAllItemWithCategory = async ({ itemId }) => {
-    try {
-      const result = await Item.findAll({
-        where: { itemId },
-        attributes: [
-          'title',
-          'price',
-          'mainImage',
-          [Sequelize.col('ItemColor.color'), 'color'],
-          [Sequelize.col('OptionSize.size'), 'size'],
-          [Sequelize.col('ItemInformation.content'), 'content'],
-          [Sequelize.col('ItemInformation.material'), 'material'],
-          [Sequelize.col('ItemInformation.mainImage'), 'mainImage'],
-        ],
+  //       include: [
+  //         {
+  //           model: ItemColor,
+  //           as: 'itemId',
+  //           required: true,
 
-        include: [
-          {
-            model: ItemColor,
-            as: 'itemId',
-            required: true,
+  //           attributes: [],
+  //         },
+  //       ],
 
-            attributes: [],
-          },
-        ],
+  //       include: [
+  //         {
+  //           model: OptionSize,
+  //           as: 'itemId',
+  //           required: true,
 
-        include: [
-          {
-            model: OptionSize,
-            as: 'itemId',
-            required: true,
+  //           attributes: [],
+  //         },
+  //       ],
 
-            attributes: [],
-          },
-        ],
+  //       include: [
+  //         {
+  //           model: ItemInformation,
+  //           as: 'itemId',
+  //           required: true,
 
-        include: [
-          {
-            model: ItemInformation,
-            as: 'itemId',
-            required: true,
-
-            attributes: [],
-          },
-        ],
-      });
-      return result;
-    } catch {
-      throw {
-        code: 412,
-        errorMessage: '입력된 카테고리 형식이 올바르지 않습니다.',
-      };
-    } finally {
-      const result = await ItemDetail.findAll({
-        where: { gender, theme },
-      });
-      return result;
-    }
-  };
+  //           attributes: [],
+  //         },
+  //       ],
+  //     });
+  //     return result;
+  //   } catch {
+  //     throw {
+  //       code: 412,
+  //       errorMessage: '입력된 카테고리 형식이 올바르지 않습니다.',
+  //     };
+  //   } finally {
+  //     const result = await ItemDetail.findAll({
+  //       where: { gender, theme },
+  //     });
+  //     return result;
+  //   }
+  // };
 
   // 상품 삭제
   deleteItem = async ({ itemId }) => {
@@ -249,6 +310,25 @@ class ItemRepository {
       where: {
         itemId: itemId,
       },
+      attributes: ['itemId', 'title', 'price'],
+      include: [
+        {
+          model: ItemColor,
+          attributes: ['color'],
+        },
+        {
+          model: OptionSize,
+          attributes: ['size', 'count'],
+        },
+        {
+          model: ItemInformation,
+          attributes: ['content', 'material'],
+        },
+        {
+          model: OptionImage,
+          attributes: ['src'],
+        },
+      ],
     });
 
     if (!item) {
