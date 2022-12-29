@@ -5,7 +5,7 @@ class WishListController {
   // 위시리스트 상품 추가
   addItemInWishList = async (req, res) => {
     try {
-      const userId = 1;
+      const { userId } = res.locals;
       const { itemId } = req.params;
       const addItemInWishList = await this.wishListService.addItemInWishList(
         itemId,
@@ -29,7 +29,7 @@ class WishListController {
   // 위시리스트 상품 조회
   getItemInWishList = async (req, res) => {
     try {
-      const userId = 1;
+      const { userId } = res.locals;
       const getItemInWishList = await this.wishListService.getItemInWishList(
         userId
       );
@@ -70,7 +70,7 @@ class WishListController {
   // 위시리스트 상품 제거
   deleteItemInWishList = async (req, res) => {
     try {
-      const userId = 1;
+      const { userId } = res.locals;
       const { wishListId } = req.params;
       const deleteItemInWishList =
         await this.wishListService.deleteItemInWishList(wishListId, userId);

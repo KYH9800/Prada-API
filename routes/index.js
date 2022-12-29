@@ -15,4 +15,8 @@ router.use('/user', wishListRouter);
 const itemRouter = require('./items.routes');
 router.use('/items', itemRouter);
 
+// 관리자용 상품 조회 라우터: 윤혁
+const adminRouter = require('./admin.routes');
+router.use('/admin', adminRouter);
+
 module.exports = router;

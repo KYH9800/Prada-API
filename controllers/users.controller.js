@@ -20,7 +20,7 @@ class UsersController {
         lastName,
         country,
       } = await registerSchema.validateAsync(req.body);
-      
+
       await userService.userSignupService({
         email,
         emailConfirm,
@@ -42,6 +42,7 @@ class UsersController {
   userLoginController = async (req, res) => {
     try {
       const { email, password } = await loginSchema.validateAsync(req.body);
+      console.log('userLoginController: ', email, password);
 
       const { accessToken, firstname } = await userService.userLoginService({
         email,
