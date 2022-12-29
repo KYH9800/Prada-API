@@ -5,6 +5,7 @@ const {
   ItemInformation,
   OptionImage,
   OptionSize,
+  MainImage,
 } = require('../models');
 
 class ItemRepository {
@@ -50,7 +51,7 @@ class ItemRepository {
     return await ItemInformation.create({ content, material, itemId });
   };
 
-  // 상품 이미지 등록
+  // 상품 옵션 이미지 등록
   createOptionImage = async (src, itemId, itemColorId) => {
     // src.map((v) => console.log('이미지 경로: ', typeof v.location));
     if (Array.isArray(src)) {
@@ -70,6 +71,24 @@ class ItemRepository {
     } else {
       // 이미지가 한장이면
       const image = await OptionImage.create({ src, itemId, itemColorId });
+      return image;
+    }
+  };
+
+  // 상품 메인 이미지 등록
+  createMainImage = async (src, itemId) => {
+    if (Array.isArray(src)) {
+      const images = src.map(
+        async (image) =>
+          await MainImage.create({
+            src: image.location,
+            itemId: itemId,
+          })
+      );
+      return images;
+    } else {
+      // 이미지가 한장이면
+      const image = await MainImage.create({ src, itemId });
       return image;
     }
   };
@@ -222,7 +241,7 @@ class ItemRepository {
   // 상품 삭제
   deleteItem = async ({ itemId }) => {
     return await Item.destroy({ where: { itemId } });
-  }
+  };
 
   // 상품 상세 조회
   getItemDetailInformation = async (itemId) => {

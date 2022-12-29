@@ -7,7 +7,6 @@ class ItemController {
   createItem = async (req, res) => {
     try {
       const src = req.files;
-
       const {
         gender,
         theme,
@@ -73,7 +72,7 @@ class ItemController {
       //     errorMessage: '입력된 테마 형식이 올바르지 않습니다.',
       //   };
       // }
-      
+
       // 서비스한테 비즈니스 로직을 수행해서 값을 내놔라.
       const result = await this.itemService.findAllItem({
         gender,
@@ -163,7 +162,6 @@ class ItemController {
           .json({ errorMessage: error.errorMessage });
       } else {
         return res.status(400).json({ errorMessage: '상품 수정 실패' });
-
       }
     }
   };

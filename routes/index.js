@@ -15,4 +15,8 @@ router.use('/user', wishListRouter);
 const itemRouter = require('./items.routes');
 router.use('/items', itemRouter);
 
+// 관리자 로그인, 회원가입 라우터
+const adminUserRouter = require('./adminUser.auth.routes');
+router.use('/admin', adminUserRouter);
+
 module.exports = router;
