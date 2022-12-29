@@ -176,13 +176,13 @@ class WishListRepository {
 
   // 위시리스트 상품 제거
   deleteItemInWishList = async (wishListId) => {
-    const findCartList = await this.wishListModel.findOne({
+    const findWishList = await this.wishListModel.findOne({
       where: {
-        cartId: cartId,
+        wishListId: wishListId,
       },
     });
 
-    if (!findCartList) {
+    if (!findWishList) {
       throw new Error(
         '장바구니에 존재하지 않는 상품입니다. 관리자에게 문의하세요.'
       );
@@ -191,7 +191,7 @@ class WishListRepository {
     const deleteItem = await this.wishListModel.destroy({
       where: {
         userId: userId,
-        cartId: cartId,
+        wishListId: wishListId,
       },
     });
 
