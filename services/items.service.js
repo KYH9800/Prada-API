@@ -112,6 +112,7 @@ class ItemService {
 
   //테마, 카테고리별 상품 조회
   findAllItem = async (gender, theme, category) => {
+    // console.log('category 서비스: ', category);
     // 카테고리가 없으면
     if (!category) {
       const result = await this.itemRepository.findAllItem(gender, theme);

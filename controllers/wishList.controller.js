@@ -5,6 +5,7 @@ class WishListController {
   // 위시리스트 상품 추가
   addItemInWishList = async (req, res) => {
     try {
+      // const userId = 1;
       const { userId } = res.locals;
       const { itemId } = req.params;
       const addItemInWishList = await this.wishListService.addItemInWishList(

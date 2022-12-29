@@ -95,7 +95,7 @@ class ItemRepository {
 
   //테마별, 카테고리별 상품 조회
   findAllItem = async (gender, theme) => {
-    console.log('gender, theme: ', gender, theme);
+    console.log('gender, theme 2개: ', gender, theme);
     try {
       const items = await ItemDetail.findAll({
         where: {
@@ -108,6 +108,7 @@ class ItemRepository {
           },
         ],
       });
+      console.log('items: ', items);
       // console.log('genderItems: ', items);
       const where = {
         itemId: items.map((v) => v.Items.map((v) => v.itemId)),
@@ -142,7 +143,7 @@ class ItemRepository {
   //! 위시리스트 상태도 보내주기: 로그인한 userId 필요
   // 테이블보고 로직 생각해라 윤혁아
   findAllItemWithCategory = async (gender, theme, category) => {
-    console.log('gender, theme, category: ', gender, theme, category);
+    console.log('gender, theme, category 3개: ', gender, theme, category);
     try {
       const items = await ItemDetail.findAll({
         where: {

@@ -20,8 +20,21 @@ module.exports = multer({
       // 이름이 겹치지 않게 파일 이름에 타임스템프를 더해준다.
       // 이렇게 s3 버켓에 저장한다.
       console.log(file);
-      const filiname = path.basename(file.originalname).trim();
-      cb(null, `original/${Date.now()}_${filiname}`);
+      const filiname = path.basename(file.originalname).trim(); //sdfhsjgjww_Sfdh235_Sfjshkgks
+      console.log('filiname: ', filiname);
+
+      // let newFileName = '';
+      // const regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+      // let reg = /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim;
+
+      // for (value of filiname) {
+      //   if (regExp.test(value)) {
+      //     value = '0';
+      //   }
+      //   newFileName += value;
+      // }
+
+      cb(null, `original/${Date.now()}_${newFileName}`);
       // cb(null, `original/${Date.now()}.png`);
     },
   }),
