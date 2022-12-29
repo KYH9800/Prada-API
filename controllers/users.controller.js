@@ -35,7 +35,7 @@ class UsersController {
       console.log(err);
       res
         .status(400)
-        .json({ errorMessage: '요청한 데이터의 형식이 올바르지 않습니다.' });
+        .json({ message: '요청한 데이터의 형식이 올바르지 않습니다.' });
     }
   };
 
@@ -53,7 +53,7 @@ class UsersController {
       console.log(err);
       res
         .status(400)
-        .json({ errorMessage: '요청한 데이터의 형식이 올바르지 않습니다.' });
+        .json({ message: '요청한 데이터의 형식이 올바르지 않습니다.' });
     }
   };
 
@@ -63,7 +63,7 @@ class UsersController {
       console.log(err);
       res
         .status(400)
-        .json({ errorMessage: '요청한 데이터의 형식이 올바르지 않습니다.' });
+        .json({ message: '요청한 데이터의 형식이 올바르지 않습니다.' });
     }
   };
 
@@ -76,7 +76,7 @@ class UsersController {
     } catch (err) {
       console.log(err);
       res.status(400).json({
-        errorMessage: '요청 실패: 관리자에게 문의하세요.',
+        message: '요청 실패: 관리자에게 문의하세요.',
         result: false,
       });
     }
@@ -99,7 +99,7 @@ class UsersController {
     } catch (err) {
       console.log(err);
       res.status(400).json({
-        errorMessage: '요청 실패: 관리자에게 문의하세요.',
+        message: '요청 실패: 관리자에게 문의하세요.',
         result: false,
       });
     }
