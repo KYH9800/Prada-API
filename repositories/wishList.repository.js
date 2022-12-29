@@ -175,7 +175,7 @@ class WishListRepository {
   };
 
   // 위시리스트 상품 제거
-  deleteItemInWishList = async (wishListId) => {
+  deleteItemInWishList = async (wishListId, userId) => {
     const findWishList = await this.wishListModel.findOne({
       where: {
         wishListId: wishListId,
