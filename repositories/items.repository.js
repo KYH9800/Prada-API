@@ -94,6 +94,8 @@ class ItemRepository {
         itemId: items.map((v) => v.Items.map((v) => v.itemId)),
       };
 
+      //! 위시리스트 상태도 보내주기: 로그인한 userId 필요
+      // 테이블보고 로직 생각해라 윤혁아
       const result = await Item.findAll({
         where,
         attributes: ['itemId', 'title', 'price'],
@@ -118,6 +120,8 @@ class ItemRepository {
     }
   };
 
+  //! 위시리스트 상태도 보내주기: 로그인한 userId 필요
+  // 테이블보고 로직 생각해라 윤혁아
   findAllItemWithCategory = async (gender, theme, category) => {
     console.log('gender, theme, category: ', gender, theme, category);
     try {

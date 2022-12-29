@@ -59,7 +59,7 @@ class UsersService {
     });
     return true;
   };
-  
+
   userLoginService = async ({ email, password }) => {
     //TODO: 이메일 형식이 맞는지 검증하는 API 필요
 
@@ -67,7 +67,7 @@ class UsersService {
       throw new ApiError('email 또는 password가 없습니다.', 400);
     }
     const user = await usersrepository.userFindForLogin({ email });
-    
+
     const Comparedpassword = await bcrypt.compare(password, user.password);
 
     if (!user || !Comparedpassword) {
@@ -81,10 +81,9 @@ class UsersService {
         expiresIn: '24h',
       }
     );
+
     const firstname = user.firstName;
     return { accessToken, firstname };
-
-    
   };
 
   userLogoutService = async (req, res) => {};
@@ -96,14 +95,27 @@ class UsersService {
     return await usersrepository.userGetInfo({ userId });
   };
 
-  userModifyService = async ({ userId,  firstName, lastName, country, email, emailConfirm}) => {
-
-    if(!userId || !firstName || !lastName || !country || !email || !emailConfirm){
-      throw new ApiError("입력 body 오류", 400);
+  userModifyService = async ({
+    userId,
+    firstName,
+    lastName,
+    country,
+    email,
+    emailConfirm,
+  }) => {
+    if (
+      !userId ||
+      !firstName ||
+      !lastName ||
+      !country ||
+      !email ||
+      !emailConfirm
+    ) {
+      throw new ApiError('입력 body 오류', 400);
     }
 
-    if(email !== emailConfirm){
-      throw new ApiError("이메일이 다름", 400)
+    if (email !== emailConfirm) {
+      throw new ApiError('이메일이 다름', 400);
     }
 
     // const hashedpassword = await bcrypt.hash(
@@ -117,9 +129,14 @@ class UsersService {
     // if(!user || !Comparedpassword){
     //   throw new ApiError("현재 비밀번호가 틀려서 에러가 났어요", 400)
     // }
-    
 
-    await usersrepository.userModify({userId,  firstName, lastName, country, email});
+    await usersrepository.userModify({
+      userId,
+      firstName,
+      lastName,
+      country,
+      email,
+    });
     return true;
   };
 }

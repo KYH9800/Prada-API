@@ -35,7 +35,8 @@ class WishListRepository {
     });
 
     if (!findItem) {
-      throw new Error('해당 상품은 존재하지 않습니다.');
+      throw new Error('해당 상품은 존재하지 않습니다.'); //! response로 보내기
+      // return { errorMessage: '이미 담긴 상품입니다.' };
     }
 
     const where = {
@@ -50,14 +51,15 @@ class WishListRepository {
     // console.log('itemCheck: ', itemCheck);
     const check = itemCheck.map((v) => {
       if (v === parseInt(itemId)) {
-        throw new Error('이미 담긴 상품입니다.');
+        throw new Error('이미 담긴 상품입니다.'); //! response로 보내기
+        // return { errorMessage: '이미 담긴 상품입니다.' };
       } else {
         return true;
       }
     });
 
     if (!check) {
-      throw new Error('이미 담긴 상품입니다.');
+      throw new Error('이미 담긴 상품입니다.'); //! response로 보내기
     } else {
       const addItemInCart = this.wishListModel.create({
         itemId: itemId,

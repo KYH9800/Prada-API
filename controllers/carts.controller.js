@@ -6,7 +6,7 @@ class CartController {
   // 장바구니 상품 추가
   addItemInCart = async (req, res) => {
     try {
-      const userId = 1;
+      const { userId } = res.locals;
       const { itemId } = req.params;
 
       const addItem = await this.cartService.addItemInCart(itemId, userId);
@@ -29,7 +29,7 @@ class CartController {
   // 장바구니 상품 조회
   getItemInCart = async (req, res) => {
     try {
-      const userId = 1;
+      const { userId } = res.locals;
       const userCart = await this.cartService.getItemInCart(userId);
 
       return res.status(200).json({
@@ -48,7 +48,7 @@ class CartController {
   // 장바구니 상품 제거
   deleteItemInCart = async (req, res) => {
     try {
-      const userId = 1;
+      const { userId } = res.locals;
       const { cartId } = req.params;
       console.log('cartId in Controller: ', cartId);
 
