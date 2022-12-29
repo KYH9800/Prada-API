@@ -79,8 +79,8 @@ class ItemController {
       const result = await this.itemService.findAllItem({
         gender,
         theme,
-        category
-      );
+        category,
+      });
 
       return res.status(200).json({ data: result });
     } catch (error) {
