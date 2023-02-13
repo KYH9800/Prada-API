@@ -1,7 +1,5 @@
 # Prada-API
-<aside>
-🛠 ERD(***Entity Relationship Diagram***)
-</aside>
+## 🛠 ERD(***Entity Relationship Diagram***)
 
 1차 작업: 정규화 전
 ![image](https://user-images.githubusercontent.com/61128538/218357160-7dbc7977-8ba4-4975-98d7-0251c6f9c34e.png)
