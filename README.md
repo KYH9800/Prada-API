@@ -3,7 +3,7 @@
 ## 프로젝트 소개
 Prada 쇼핑몰을 클론코딩한 프로젝트
 
-## 기능 소개 [API 명세서](https://planet-aletopelta-fbc.notion.site/da308a52ddc04dac86d38b4a1dfbc7a6?v=26e4e278cce0482b936cbef5def5b9a0)
+## 기능 소개 ([API 명세서](https://planet-aletopelta-fbc.notion.site/da308a52ddc04dac86d38b4a1dfbc7a6?v=26e4e278cce0482b936cbef5def5b9a0))
 1. 로그인
 2. 회원가입
 3. 로그아웃
