@@ -1,7 +1,7 @@
 # Prada-API
 
 ## [API 명세서](https://planet-aletopelta-fbc.notion.site/da308a52ddc04dac86d38b4a1dfbc7a6?v=26e4e278cce0482b936cbef5def5b9a0)
-
+Notion 링크 참고
 <br>
 
 ## 🛠 ERD(***Entity Relationship Diagram***)
